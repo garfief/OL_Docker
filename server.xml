@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<server description="Liberty Server">
+
+    <!-- Enable features -->
+    <featureManager>
+      <feature>jaxrs-2.0</feature>
+      <feature>jsonp-1.0</feature>
+      <feature>servlet-3.1</feature>
+  </featureManager>
+
+    <!-- To access this server from a remote client add a host attribute to the following element, e.g. host="*" -->
+    <httpEndpoint id="defaultHttpEndpoint"
+                  host="*"
+                  httpPort="9080"
+                  httpsPort="9443" />
+                  
+    <!-- Automatically expand WAR files and EAR files -->
+    <applicationManager autoExpand="true"/>
+
+    <!-- WSRP Config -->
+    <webContainer deferServletLoad="false"/>
+
+    <library id="sharedLibs">
+        <!-- All the jar files in ther servers lib folder -->
+        <fileset dir="/opt/ol/wlp/lib/global" includes="*.jar"  />
+    </library>
+
+     
+    <application location ="hello-world-1.0-SNAPSHOT.war" context-root="/helloworld" type="war">
+        <classloader commonLibraryRef="sharedLibs" />
+    </application>
+    
+    <application location ="multiply-wsrp-producer-unsecured.ear" context-root="/producer_multiply_unsecured" type="ear"/>
+    
+</server>
